@@ -1,7 +1,16 @@
-# Anonymous NeurIPS Submission
+# Neural Optimal Transport without Spurious Global Solution
+
+This is the 'python' 
+
+
 
 ## Setup
-pip install -r requirements.txt
+Python 3.12
+
+```
+> pip install -r requirements.txt
+> python -m pip install torch
+```
 
 ## Train
 python train.py
