@@ -6,7 +6,7 @@ import numpy as np
 def cost(x, y):
     return ((x - y) ** 2).sum(dim=1, keepdim=True)/2
 
-def show_mapping(T,sample_mu,sample_nu, option = False, device = None):
+def show_mapping(T,sample_mu,sample_nu, option = False, device = None, f = None, contour = False):
     if device is None:
         device = next(T.parameters()).device
 
@@ -35,7 +35,26 @@ def show_mapping(T,sample_mu,sample_nu, option = False, device = None):
                 outputs[i+n_eval,1]-x[i,1],
                 color='gray', alpha=0.5, head_width=0, length_includes_head=True)
         '''
-        
+
+    if (contour == True and f is not None):
+        x_min, x_max = -2.0, 2.0
+        y_min, y_max = -2.0, 2.0
+        n = 300 
+
+        xs = np.linspace(x_min, x_max, n)
+        ys = np.linspace(y_min, y_max, n)
+        xx, yy = np.meshgrid(xs, ys)
+
+        grid = np.stack([xx.ravel(), yy.ravel()], axis=1)
+        grid_torch = torch.tensor(grid, dtype=torch.float32).to(device)
+
+        with torch.no_grad():
+            zz = f(grid_torch).cpu().numpy()
+        zz = zz.reshape(n, n)
+        plt.contour(xx, yy, zz, levels=20)
+        plt.xlim(x_min, x_max)
+        plt.ylim(y_min, y_max)
+
     plt.scatter(x[:,0], x[:,1], label=r"$\mu$", s=1, alpha=0.5)
     plt.scatter(y[:,0], y[:,1], label=r"$\nu$", s=1, alpha=0.5)
     plt.scatter(outputs[:,0], outputs[:,1], label=r"$T(x,z)$", s=1, alpha=0.5)
