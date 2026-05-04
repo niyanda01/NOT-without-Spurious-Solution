@@ -31,3 +31,40 @@ class Critic(nn.Module):
 
     def forward(self, x):
         return self.net(x)
+
+class RF_Transport(nn.Module):
+    def __init__(self, input_dim=2, hidden_dim=256, output_dim=2, scale=0.1):
+        super().__init__()
+
+        # random feature (freeze)
+        self.register_buffer("W1", torch.randn(input_dim, hidden_dim) * scale)
+        self.register_buffer("b1", torch.randn(hidden_dim) * scale)
+
+        # trainable linear head
+        self.W2 = nn.Parameter(torch.randn(hidden_dim, output_dim) * scale)
+        self.b2 = nn.Parameter(torch.randn(output_dim)* scale)
+
+    def forward(self, z):
+        phi = nn.ReLU()
+        h1 = 2 * phi(z @ self.W1 + self.b1)
+        out = h1 @ self.W2 + self.b2
+        return out
+
+class RF_Critic(nn.Module):
+    def __init__(self, input_dim=2, hidden_dim=256, scale = 0.3):
+        super().__init__()
+
+        # random features (fixed)
+        self.register_buffer("W", torch.randn(input_dim, hidden_dim) * scale)
+        self.register_buffer("b", torch.randn(hidden_dim) * scale)
+
+        # trainable nonnegative output weight
+        self.a = nn.Parameter(torch.rand(hidden_dim, 1))
+        self.phi = nn.ReLU()
+
+    def forward(self, x):
+        h = self.phi(x @ self.W + self.b)
+
+        out = 0.5 * torch.sum(x**2, dim=1, keepdim=True) - h @ self.a
+
+        return out

@@ -6,7 +6,7 @@ import numpy as np
 def cost(x, y):
     return ((x - y) ** 2).sum(dim=1, keepdim=True)/2
 
-def show_mapping(T,sample_mu,sample_nu, option = False, device = None, f = None, contour = False):
+def show_mapping(T,sample_mu,sample_nu, option = False, device = None, f = None, contour = False, legend = True):
     if device is None:
         device = next(T.parameters()).device
 
@@ -52,6 +52,7 @@ def show_mapping(T,sample_mu,sample_nu, option = False, device = None, f = None,
             zz = f(grid_torch).cpu().numpy()
         zz = zz.reshape(n, n)
         plt.contour(xx, yy, zz, levels=20)
+        plt.gca().set_aspect("equal")
         plt.xlim(x_min, x_max)
         plt.ylim(y_min, y_max)
 
@@ -59,7 +60,8 @@ def show_mapping(T,sample_mu,sample_nu, option = False, device = None, f = None,
     plt.scatter(y[:,0], y[:,1], label=r"$\nu$", s=1, alpha=0.5)
     plt.scatter(outputs[:,0], outputs[:,1], label=r"$T(x,z)$", s=1, alpha=0.5)
     plt.axis('equal')
-    plt.legend()
+    if legend: 
+        plt.legend()
     plt.show()
 
 def grad_norm(grads):
