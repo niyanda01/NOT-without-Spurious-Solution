@@ -116,3 +116,49 @@ def plot_3d_function(f, x_range=(-1.0, 1.0), y_range=(-1.0, 1.0), resolution=200
     ax.set_zlabel('f(x, y)')
 
     plt.show()
+    
+def ema_np(x, alpha=0.1):
+    x = np.array(x)
+    m = np.zeros_like(x, dtype=float)
+    m[0] = x[0]
+    for i in range(1, len(x)):
+        m[i] = alpha * x[i] + (1 - alpha) * m[i-1]
+    return m
+
+def plot_loss(loss_hist):
+    plt.figure()
+
+    loss_plot = ema_np(loss_hist, alpha=0.05)
+
+    plt.plot(loss_hist, label="Loss", color='tab:blue', alpha=0.5 )
+    plt.plot(loss_plot, label="EMA Loss", color='tab:blue')
+    plt.axhline(y=1/3, linestyle='--', color='black')
+
+    plt.xlabel("Iteration")
+    plt.ylabel("Loss")
+    plt.title("Training Loss")
+    plt.legend()
+    plt.grid(True)
+
+    plt.show()
+
+def plot_grad_norm(grad_T_hist, grad_f_hist):
+    plt.figure()
+
+    grad_T_plot = ema_np(grad_T_hist, alpha=0.05)
+    grad_f_plot = ema_np(grad_f_hist, alpha=0.05)
+
+
+    plt.plot(grad_T_hist, label="Grad Norm T", color='tab:blue', alpha=0.5 )
+    plt.plot(grad_f_hist, label="Grad Norm V", color='tab:orange', alpha=0.5 )
+    plt.plot(grad_T_plot, color='tab:blue')
+    plt.plot(grad_f_plot, color='tab:orange')
+
+
+    plt.xlabel("Iteration")
+    plt.ylabel(r"Gradient Norm")
+    plt.title("Gradient Norms")
+    plt.legend()
+    plt.grid(True)
+
+    plt.show()
