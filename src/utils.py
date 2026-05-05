@@ -72,6 +72,11 @@ def cosine_lr(step, total_steps, lr_max, lr_min=0.0):
         1 + math.cos(math.pi * step / (step+total_steps))
     )
 
+def sigma_schedule(k, K, P=2000, sigma_max=0.2, sigma_min=0.05):
+    t = (P * (k // P) + 1) / K
+    sigma_k = (1 - t) * sigma_max + t * sigma_min
+    return sigma_k
+
 def plot_3d_function(f, x_range=(-1.0, 1.0), y_range=(-1.0, 1.0), resolution=200, device=None, cmap="viridis"):
     if device is None:
         try:
@@ -82,7 +87,6 @@ def plot_3d_function(f, x_range=(-1.0, 1.0), y_range=(-1.0, 1.0), resolution=200
     x_min, x_max = x_range
     y_min, y_max = y_range
 
-    # grid 생성
     x = np.linspace(x_min, x_max, resolution)
     y = np.linspace(y_min, y_max, resolution)
     X, Y = np.meshgrid(x, y)
@@ -90,7 +94,6 @@ def plot_3d_function(f, x_range=(-1.0, 1.0), y_range=(-1.0, 1.0), resolution=200
     XY = np.stack([X.ravel(), Y.ravel()], axis=1)
     XY_torch = torch.tensor(XY, dtype=torch.float32, device=device)
 
-    # 함수 평가
     with torch.no_grad():
         Z = f(XY_torch).detach().cpu().numpy()
 
