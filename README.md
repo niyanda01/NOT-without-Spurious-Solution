@@ -29,10 +29,8 @@ Please refer to the official [PyTorch website](https://pytorch.org/) for detaile
 
 ## Repository Structure
 
-
-
-## Train
-python train.py
-
-## Reproduce Results
-bash scripts/run_all.sh
+**2D toy experiment**
+- `notebook/1. NOT_toy_GDmax.ipynb` - learning perpendicular distribution with GDmax and EG.
+- `notebook/2. NOT_toy_ICNN.ipynb` - learning perpendicular distribution with deterministic 2-layer ICNN.
+- `notebook/3. NOT_toy_EG.ipynb` -learning various synthetic data with spurious solution with EG. 
+- `notebook/4. NOT_toy_Smoothing.ipynb` - learning various synthetic data with smoothing techniques and compare with ours.
