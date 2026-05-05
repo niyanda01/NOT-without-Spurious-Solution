@@ -45,7 +45,7 @@ class RF_Transport(nn.Module):
         self.b2 = nn.Parameter(torch.randn(output_dim)* scale)
 
     def forward(self, z):
-        phi = nn.ReLU()
+        phi = nn.Sigmoid()
         h1 = 2 * phi(z @ self.W1 + self.b1)
         out = h1 @ self.W2 + self.b2
         return out
