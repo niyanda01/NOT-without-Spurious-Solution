@@ -37,6 +37,7 @@ def show_mapping(T,sample_mu,sample_nu, option = False, device = None, f = None,
         '''
 
     if (contour == True and f is not None):
+        plt.figure(figsize=(6,6))
         x_min, x_max = -2.0, 2.0
         y_min, y_max = -2.0, 2.0
         n = 300 
@@ -52,7 +53,6 @@ def show_mapping(T,sample_mu,sample_nu, option = False, device = None, f = None,
             zz = f(grid_torch).cpu().numpy()
         zz = zz.reshape(n, n)
         plt.contour(xx, yy, zz, levels=20)
-        plt.gca().set_aspect("equal")
         plt.xlim(x_min, x_max)
         plt.ylim(y_min, y_max)
 
@@ -116,7 +116,7 @@ def plot_3d_function(f, x_range=(-1.0, 1.0), y_range=(-1.0, 1.0), resolution=200
     ax.set_zlabel('f(x, y)')
 
     plt.show()
-    
+
 def ema_np(x, alpha=0.1):
     x = np.array(x)
     m = np.zeros_like(x, dtype=float)
@@ -134,9 +134,9 @@ def plot_loss(loss_hist):
     plt.plot(loss_plot, label="EMA Loss", color='tab:blue')
     plt.axhline(y=1/3, linestyle='--', color='black')
 
-    plt.xlabel("Iteration")
-    plt.ylabel("Loss")
-    plt.title("Training Loss")
+    plt.xlabel("Iteration", fontsize=14)
+    plt.ylabel("Loss", fontsize=14)
+    plt.title("Training Loss", fontsize=16)
     plt.legend()
     plt.grid(True)
 
@@ -149,15 +149,15 @@ def plot_grad_norm(grad_T_hist, grad_f_hist):
     grad_f_plot = ema_np(grad_f_hist, alpha=0.05)
 
 
-    plt.plot(grad_T_hist, label="Grad Norm T", color='tab:blue', alpha=0.5 )
-    plt.plot(grad_f_hist, label="Grad Norm V", color='tab:orange', alpha=0.5 )
+    plt.plot(grad_T_hist, label=r"$\| \nabla_T L \|$", color='tab:blue', alpha=0.5 )
+    plt.plot(grad_f_hist, label=r"$\| \nabla_V L \|$", color='tab:orange', alpha=0.5 )
     plt.plot(grad_T_plot, color='tab:blue')
     plt.plot(grad_f_plot, color='tab:orange')
 
 
-    plt.xlabel("Iteration")
-    plt.ylabel(r"Gradient Norm")
-    plt.title("Gradient Norms")
+    plt.xlabel("Iteration", fontsize=14)
+    plt.ylabel(r"Gradient Norm", fontsize=14)
+    plt.title("Gradient Norms", fontsize=16)
     plt.legend()
     plt.grid(True)
 
