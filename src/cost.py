@@ -11,7 +11,19 @@ def compute_transport_cost(T, sample_mu, n_samples=1024, device=device):
 
     return cost.item()
 
-def sinkhorn_w2(x, y, epsilon=0.05, n_iter=100):
+def compute_transport_cost_noise(T, sample_mu, sigma=0.05, n_samples=1024, device=device):
+    x = sample_mu(n_samples).to(device)
+    z = torch.randn(n_samples, 2, device=device)
+    x_tilde = x + sigma * z
+    with torch.no_grad():
+        Tx = T(x_tilde)
+
+    # squared cost
+    cost = ((Tx - x) ** 2).sum(dim=1).mean()
+
+    return cost.item()
+
+def sinkhorn_w2(x, y, epsilon=0.05, n_iter=1000):
     n, m = x.shape[0], y.shape[0]
 
     # uniform weights

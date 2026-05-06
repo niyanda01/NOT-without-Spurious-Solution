@@ -62,7 +62,7 @@ class ICNNCritic(nn.Module):
         # output layer (no activation → convex 유지)
         out = F.linear(z, wz3) + self.wx3(x) + self.bias3
 
-        return out
+        return 0.5 * torch.sum(x**2, dim=1, keepdim=True) - out/10
 
 class RF_Transport(nn.Module):
     def __init__(self, input_dim=2, hidden_dim=500, output_dim=2, scale=0.3):
