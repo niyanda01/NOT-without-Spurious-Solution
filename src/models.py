@@ -15,7 +15,7 @@ class Transport(nn.Module):
 
     def forward(self, x):
         z = torch.randn(x.shape[0], 1, device=x.device)
-        # z = 2 * torch.rand(x.shape[0], 1, device=x.device) - 1
+        # z = 6 * torch.rand(x.shape[0], 1, device=x.device) - 3
         return self.net(torch.cat([x, z], dim=1))
 
 

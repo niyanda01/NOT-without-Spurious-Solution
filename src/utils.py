@@ -13,7 +13,7 @@ def show_mapping(T,sample_mu,sample_nu, option = False, device = None, f = None,
     x = sample_mu(1000).to(device)
 
     outputs = []
-    for _ in range(2):
+    for _ in range(5):
         outputs.append(T(x).detach().cpu())
 
     outputs = torch.cat(outputs, dim=0)
