@@ -33,7 +33,7 @@ class Critic(nn.Module):
         return self.net(x)
 
 class RF_Transport(nn.Module):
-    def __init__(self, input_dim=2, hidden_dim=256, output_dim=2, scale=0.1):
+    def __init__(self, input_dim=2, hidden_dim=256, output_dim=2, scale=0.3):
         super().__init__()
 
         # random feature (freeze)
