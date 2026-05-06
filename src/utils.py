@@ -38,8 +38,8 @@ def show_mapping(T,sample_mu,sample_nu, option = False, device = None, f = None,
 
     if (contour == True and f is not None):
         plt.gcf().set_size_inches(6, 6)
-        x_min, x_max = -2.0, 2.0
-        y_min, y_max = -2.0, 2.0
+        x_min, x_max = -1.5, 1.5
+        y_min, y_max = -1.5, 1.5
         n = 300 
 
         xs = np.linspace(x_min, x_max, n)
