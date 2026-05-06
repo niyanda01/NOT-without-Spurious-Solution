@@ -1,6 +1,9 @@
 import torch
 
-def compute_transport_cost(T, sample_mu, n_samples=1024, device=device):
+def compute_transport_cost(T, sample_mu, n_samples=1024, device=None):
+    if device is None:
+        device = next(T.parameters()).device
+        
     x = sample_mu(n_samples).to(device)
 
     with torch.no_grad():
@@ -11,7 +14,10 @@ def compute_transport_cost(T, sample_mu, n_samples=1024, device=device):
 
     return cost.item()
 
-def compute_transport_cost_noise(T, sample_mu, sigma=0.05, n_samples=1024, device=device):
+def compute_transport_cost_noise(T, sample_mu, sigma=0.05, n_samples=1024, device=None):
+    if device is None:
+        device = next(T.parameters()).device
+
     x = sample_mu(n_samples).to(device)
     z = torch.randn(n_samples, 2, device=device)
     x_tilde = x + sigma * z
@@ -53,7 +59,10 @@ def sinkhorn_w2(x, y, epsilon=0.05, n_iter=1000):
     return w2
 
 def compute_w2_sinkhorn(T, sample_mu, sample_nu,
-                       n_samples=512, epsilon=0.05, device=device):
+                       n_samples=512, epsilon=0.05, device=None):
+    if device is None:
+        device = next(T.parameters()).device
+
     x = sample_mu(n_samples).to(device)
     y_true = sample_nu(n_samples).to(device)
 
@@ -65,7 +74,10 @@ def compute_w2_sinkhorn(T, sample_mu, sample_nu,
     return w2.item()
 
 def compute_w2_sinkhorn_noise(T, sample_mu, sample_nu, sigma = 0.05,
-                       n_samples=512, epsilon=0.05, device=device):
+                       n_samples=512, epsilon=0.05, device=None):
+    if device is None:
+        device = next(T.parameters()).device
+
     x = sample_mu(n_samples).to(device)
     z = torch.randn(n_samples, 2, device=device)
     x_tilde = x + sigma * z
