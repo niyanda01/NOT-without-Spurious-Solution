@@ -37,7 +37,7 @@ def show_mapping(T,sample_mu,sample_nu, option = False, device = None, f = None,
         '''
 
     if (contour == True and f is not None):
-        plt.set_size_inches(6, 6)
+        plt.gcf().set_size_inches(6, 6)
         x_min, x_max = -2.0, 2.0
         y_min, y_max = -2.0, 2.0
         n = 300 
