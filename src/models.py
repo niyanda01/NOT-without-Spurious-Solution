@@ -1,5 +1,6 @@
 import torch
 import torch.nn as nn
+import torch.nn.functional as F
 
 class Transport(nn.Module):
     def __init__(self):
@@ -32,8 +33,39 @@ class Critic(nn.Module):
     def forward(self, x):
         return self.net(x)
 
+class ICNNCritic(nn.Module):
+    def __init__(self, input_dim=2, hidden_dim=64):
+        super().__init__()
+
+        self.wx1 = nn.Linear(input_dim, hidden_dim)
+
+        self.wz2_raw = nn.Parameter(torch.randn(hidden_dim, hidden_dim))
+        self.wx2 = nn.Linear(input_dim, hidden_dim)
+
+        self.wz3_raw = nn.Parameter(torch.randn(1, hidden_dim))
+        self.wx3 = nn.Linear(input_dim, 1)
+
+        self.bias2 = nn.Parameter(torch.zeros(hidden_dim))
+        self.bias3 = nn.Parameter(torch.zeros(1))
+
+    def forward(self, x):
+        # first layer
+        z = F.relu(self.wx1(x))
+
+        # enforce non-negative weights
+        wz2 = F.softplus(self.wz2_raw)
+        wz3 = F.softplus(self.wz3_raw)
+
+        # second layer
+        z = F.relu(F.linear(z, wz2) + self.wx2(x) + self.bias2)
+
+        # output layer (no activation → convex 유지)
+        out = F.linear(z, wz3) + self.wx3(x) + self.bias3
+
+        return out
+
 class RF_Transport(nn.Module):
-    def __init__(self, input_dim=2, hidden_dim=256, output_dim=2, scale=0.3):
+    def __init__(self, input_dim=2, hidden_dim=500, output_dim=2, scale=0.3):
         super().__init__()
 
         # random feature (freeze)
@@ -51,7 +83,7 @@ class RF_Transport(nn.Module):
         return out
 
 class RF_Critic(nn.Module):
-    def __init__(self, input_dim=2, hidden_dim=256, scale = 0.3):
+    def __init__(self, input_dim=2, hidden_dim=1000, scale = 0.3):
         super().__init__()
 
         # random features (fixed)
