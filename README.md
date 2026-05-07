@@ -15,6 +15,7 @@ All notebooks are also compatible with `Google Colab` and can executed directly 
 ```
 > !git clone https://github.com/niyanda01/NOT-without-Spurious-Solution.git
 > %cd NOT-without-Spurious-Solution
+> !pip install pot
 ```
 
 Otherwise, install the required dependencies as follows:
