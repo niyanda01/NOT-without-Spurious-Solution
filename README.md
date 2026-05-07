@@ -36,4 +36,4 @@ Please refer to the official [PyTorch website](https://pytorch.org/) for detaile
 
 **CMNIST Image Translation**
 - `notebook/5. NOT_CMNIST.ipynb` - learning random color cmnist to cmnist image translation
-- `notebook/5. NOT_CMNIST_Orthogonal.ipynb` - learning red color mnist to blue color cmnist image translation
+- `notebook/6. NOT_CMNIST_Orthogonal.ipynb` - learning red color mnist to blue color cmnist image translation
