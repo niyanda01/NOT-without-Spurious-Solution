@@ -31,6 +31,10 @@ Please refer to the official [PyTorch website](https://pytorch.org/) for detaile
 
 **2D toy experiment**
 - `notebook/1. NOT_toy_GDmax.ipynb` - learning perpendicular distribution with GDmax and EG.
-- `notebook/2. NOT_toy_ICNN.ipynb` - learning perpendicular distribution with deterministic 2-layer ICNN.
+- `notebook/2. NOT_toy_ICNN.ipynb` - learning perpendicular distribution with ICNN.
 - `notebook/3. NOT_toy_EG.ipynb` -learning various synthetic data with spurious solution with EG. 
-- `notebook/4. NOT_toy_Smoothing.ipynb` - learning synthetic data with smoothing techniques and compare with ours.
+- `notebook/4. NOT_toy_Smoothing.ipynb` - learning synthetic data with smoothing.
+
+**CMNIST Image Translation**
+- `notebook/5. NOT_CMNIST.ipynb` - learning random color cmnist to cmnist image translation
+- `notebook/5. NOT_CMNIST_Orthogonal.ipynb` - learning red color mnist to blue color cmnist image translation
