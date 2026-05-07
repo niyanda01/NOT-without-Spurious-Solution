@@ -13,7 +13,7 @@ To run the notebooks, it is recommended to install *Python 3.12*.
 All notebooks are also compatible with `Google Colab` and can executed directly there when clone source codes.
 
 ```
-> !git clone https://github.com/niyanda01/NOT-without-Spurious-Solution.git
+> !git clone git clone https://anonymous.4open.science/r/NOT-without-Spurious-Solutions-B6EA/
 > %cd NOT-without-Spurious-Solution
 > !pip install pot
 ```
