@@ -10,11 +10,9 @@ Examples are provided for reported toy failure cases where spurious global solut
 ## Setup
 
 To run the notebooks, it is recommended to install *Python 3.12*.
-All notebooks are also compatible with `Google Colab` and can executed directly there when clone source codes.
+All notebooks are also compatible with `Google Colab` and can executed directly there when clone `src` folder and install `pot` package.
 
 ```
-> !git clone https://anonymous.4open.science/r/NOT-without-Spurious-Solutions-B6EA/
-> %cd NOT-without-Spurious-Solution
 > !pip install pot
 ```
 
